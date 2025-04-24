@@ -13,6 +13,15 @@ From the Magento OS administration panel, you can view the list of IPs with whic
 
 The list of matches is saved in TXT format in a daily log that is deleted every few days.
 
+## Installation
+
+The extension must be installed via `composer`. To proceed, run these commands in your terminal:
+
+```
+composer require orangecat/checkip
+bin/magento setup:upgrade
+```
+
 ## Configuration
 Stores > Configuration > Security > Check IP
 - Enable module
@@ -21,10 +30,10 @@ Stores > Configuration > Security > Check IP
 - Mode (Block / Pause)
 - Log retention days
 
-## Installation
+## Check logs
+System > IP Blacklist Log
 
-The extension must be installed via `composer`. To proceed, run these commands in your terminal:
+## Log folder
+var/ipblacklist
 
-```
-composer require orangecat/checkip
-php bin/magento setup:upgrade
+
