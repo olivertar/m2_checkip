@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/menu.xsd">
+    <menu>
+        <add id="Orangecat_Checkip::log" title="IP Blacklist Log" module="Orangecat_Checkip" sortOrder="100"
+             action="checkip/log" parent="Magento_Backend::system" resource="Magento_Backend::admin"/>
+    </menu>
+</config>

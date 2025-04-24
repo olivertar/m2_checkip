@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="orangecat_checkip" translate="label" sortOrder="900" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <label>Check IP</label>
+            <tab>security</tab>
+            <resource>Orangecat_Checkip::config</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="update_interval" translate="label" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Update list every (hours)</label>
+                </field>
+                <field id="url_ipblacklist" translate="label" type="text" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>IPs blacklist file download URL</label>
+                </field>
+                <field id="action_mode" translate="label" type="select" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Mode</label>
+                    <source_model>Orangecat\Checkip\Model\Config\Source\ActionMode</source_model>
+                </field>
+                <field id="delay_seconds" translate="label" type="text" sortOrder="50" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Pause in seconds</label>
+                    <depends>
+                        <field id="action_mode">2</field>
+                    </depends>
+                </field>
+                <field id="log_retention_days" translate="label comment" type="text" sortOrder="60" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Log retention days</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <comment>Number of days to retain previous log files. Default value: 30.</comment>
+                    <frontend_class>validate-digits</frontend_class>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

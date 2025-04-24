@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="checkip_log_listing"
+         xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">checkip_log_listing.checkip_log_listing_data_source</item>
+            <item name="deps" xsi:type="string">checkip_log_listing.checkip_log_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">log_columns</item>
+    </argument>
+
+    <dataSource name="checkip_log_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Orangecat\Checkip\Model\Log\DataProvider</argument>
+            <argument name="name" xsi:type="string">checkip_log_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="filter_url_params" xsi:type="array">
+                        <item name="logfile" xsi:type="string">*</item>
+                        <item name="ip" xsi:type="string">*</item>
+                        <item name="user_agent" xsi:type="string">*</item>
+                    </item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+
+    <listingToolbar name="listing_top" template="Magento_MediaGalleryUi/grid/toolbar">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <columns name="log_columns">
+        <column name="id">
+            <settings>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="date">
+            <settings>
+                <label translate="true">Fecha</label>
+            </settings>
+        </column>
+        <column name="time">
+            <settings>
+                <label translate="true">Hora</label>
+            </settings>
+        </column>
+        <column name="ip">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">IP</label>
+            </settings>
+        </column>
+        <column name="user_agent">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">User Agent</label>
+            </settings>
+        </column>
+        <column name="logfile">
+            <settings>
+                <filter>select</filter>
+                <options class="Orangecat\Checkip\Model\Config\Source\LogFiles"/>
+                <dataType>select</dataType>
+                <label translate="true">File</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+    </columns>
+</listing>

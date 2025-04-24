@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/config.xsd">
+    <default>
+        <orangecat_checkip>
+            <general>
+                <url_ipblacklist><![CDATA[https://iplists.firehol.org/files/firehol_level1.netset]]></url_ipblacklist>
+                <update_interval>8</update_interval>
+                <delay_seconds>2</delay_seconds>
+                <log_retention_days>30</log_retention_days>
+            </general>
+        </orangecat_checkip>
+    </default>
+</config>
