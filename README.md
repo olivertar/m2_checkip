@@ -1,6 +1,6 @@
 # M2 Check IP Module
 
-Block sessions from IPs that have been reported
+Block sessions for Bots and IPs that have been reported
 
 This module has been developed for Magento => 2.4.6
 
@@ -13,6 +13,8 @@ From the Magento OS administration panel, you can view the list of IPs with whic
 
 The list of matches is saved in TXT format in a daily log that is deleted every few days.
 
+Additionally, you can also check for crawler visits. For this, we use the "Crawler-Detect" package (https://github.com/JayBizzle/Crawler-Detect/) as a dependency.
+
 ## Installation
 
 The extension must be installed via `composer`. To proceed, run these commands in your terminal:
@@ -22,18 +24,33 @@ composer require orangecat/checkip
 bin/magento setup:upgrade
 ```
 
-## Configuration
+## Configuration IP
 Stores > Configuration > Security > Check IP
-- Enable module
-- Update list every (hours)
+- Enable IP Check
+- Cron settings
 - IPs blacklist file download URL
 - Mode (Block / Pause)
 - Log retention days
+- Aditional Blacklist
+- Whitelist
 
-## Check logs
+## Configuration Bot
+Stores > Configuration > Security > Check IP
+- Enable Bot Check
+- Mode (Block / Pause)
+- Log retention days
+- Aditional Blacklist
+- Whitelist
+
+## Check IP logs
 System > IP Blacklist Log
 
-## Log folder
+## Check Bot logs
+System > Bot Blacklist Log
+
+## Log IP folder
 var/ipblacklist
 
+## Log Bot folder
+var/botblacklist
 

@@ -2,9 +2,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="default">
-        <job name="orangecat_checkip_update_blacklist" instance="Orangecat\Checkip\Cron\UpdateBlacklist"
+        <job name="checkip_update_blacklist" instance="Orangecat\Checkip\Cron\UpdateBlacklist"
              method="execute">
-            <schedule>* * * * *</schedule>
+            <config_path>orangecat_checkip/ip/update_interval</config_path>
         </job>
     </group>
 </config>

@@ -5,7 +5,7 @@ namespace Orangecat\Checkip\Controller\Adminhtml\Log;
 use Magento\Backend\App\Action;
 use Magento\Framework\View\Result\PageFactory;
 
-class Index extends Action
+class Bot extends Action
 {
     /** @var PageFactory */
     protected $resultPageFactory;
@@ -32,7 +32,7 @@ class Index extends Action
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend(__("Detected IPs Log"));
+        $resultPage->getConfig()->getTitle()->prepend(__("Detected Bot Log"));
         return $resultPage;
     }
 

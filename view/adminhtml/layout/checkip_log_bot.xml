@@ -4,7 +4,7 @@
     <update handle="styles"/>
     <body>
         <referenceContainer name="content">
-            <uiComponent name="checkip_log_listing"/>
+            <uiComponent name="checkip_log_bot"/>
         </referenceContainer>
     </body>
 </page>

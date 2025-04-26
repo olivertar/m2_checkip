@@ -3,12 +3,16 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/config.xsd">
     <default>
         <orangecat_checkip>
-            <general>
+            <ip>
                 <url_ipblacklist><![CDATA[https://iplists.firehol.org/files/firehol_level1.netset]]></url_ipblacklist>
-                <update_interval>8</update_interval>
+                <update_interval>0 */8 * * *</update_interval>
                 <delay_seconds>2</delay_seconds>
                 <log_retention_days>30</log_retention_days>
-            </general>
+            </ip>
+            <bot>
+                <delay_seconds>2</delay_seconds>
+                <log_retention_days>30</log_retention_days>
+            </bot>
         </orangecat_checkip>
     </default>
 </config>

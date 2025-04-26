@@ -2,7 +2,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/menu.xsd">
     <menu>
-        <add id="Orangecat_Checkip::log" title="IP Blacklist Log" module="Orangecat_Checkip" sortOrder="100"
-             action="checkip/log" parent="Magento_Backend::system" resource="Magento_Backend::admin"/>
+        <add id="Orangecat_Checkip::logip" title="IP Blacklist Log" module="Orangecat_Checkip" sortOrder="100"
+             action="checkip/log/ip" parent="Magento_Backend::system" resource="Magento_Backend::admin"/>
+        <add id="Orangecat_Checkip::logbot" title="Bot Blacklist Log" module="Orangecat_Checkip" sortOrder="110"
+             action="checkip/log/bot" parent="Magento_Backend::system" resource="Magento_Backend::admin"/>
     </menu>
 </config>

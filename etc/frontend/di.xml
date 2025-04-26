@@ -7,7 +7,13 @@
                 sortOrder="0"
         />
     </type>
-    <virtualType name="Orangecat\Checkip\Model\Log\DataProvider" type="Magento\Ui\DataProvider\AbstractDataProvider">
+    <virtualType name="Orangecat\Checkip\Model\Log\DataIpProvider" type="Magento\Ui\DataProvider\AbstractDataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object">Orangecat\Checkip\Model\Log\Collection</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Orangecat\Checkip\Model\Log\DataBotProvider" type="Magento\Ui\DataProvider\AbstractDataProvider">
         <arguments>
             <argument name="collection" xsi:type="object">Orangecat\Checkip\Model\Log\Collection</argument>
         </arguments>

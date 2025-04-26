@@ -4,19 +4,27 @@
     <system>
         <section id="orangecat_checkip" translate="label" sortOrder="900" showInDefault="1" showInWebsite="1"
                  showInStore="1">
-            <label>Check IP</label>
+            <label><![CDATA[Check IPs & BOTs]]></label>
             <tab>security</tab>
             <resource>Orangecat_Checkip::config</resource>
             <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>General Settings</label>
+                <field id="crawler_detect_version" translate="label" type="note" sortOrder="90" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Installed version of jaybizzle/crawler-detect</label>
+                    <frontend_model>Orangecat\Checkip\Block\Adminhtml\System\CrawlerDetectVersion</frontend_model>
+                </field>
+            </group>
+
+            <group id="ip" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>IP Settings</label>
                 <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
                        showInStore="1">
-                    <label>Enable module</label>
+                    <label>Enable check IP</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="update_interval" translate="label" type="text" sortOrder="20" showInDefault="1"
-                       showInWebsite="1" showInStore="1">
-                    <label>Update list every (hours)</label>
+                <field id="update_interval" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Cron settings</label>
+                    <comment><![CDATA[Format: * * * * * | https://crontab.guru/]]></comment>
+                    <validate>validate-cron-expression</validate>
                 </field>
                 <field id="url_ipblacklist" translate="label" type="text" sortOrder="30" showInDefault="1"
                        showInWebsite="1" showInStore="1">
@@ -38,8 +46,51 @@
                        showInWebsite="1" showInStore="1">
                     <label>Log retention days</label>
                     <validate>validate-number validate-greater-than-zero</validate>
-                    <comment>Number of days to retain previous log files. Default value: 30.</comment>
+                    <comment><![CDATA[Number of days to retain previous log files. Default value: 30.]]></comment>
                     <frontend_class>validate-digits</frontend_class>
+                </field>
+                <field id="blacklist" translate="label" type="textarea" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Additional Blacklist (IP)</label>
+                    <comment><![CDATA[The default IPs are coming from iplists.firehol.org. Here you can define your own custom ones. One IP per line.]]></comment>
+                </field>
+                <field id="whitelist" translate="label" type="textarea" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Whitelist (IP)</label>
+                    <comment><![CDATA[One IP per line.]]></comment>
+                </field>
+            </group>
+            <group id="bot" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Bot Settings</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable check BOT</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="action_mode" translate="label" type="select" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Mode</label>
+                    <source_model>Orangecat\Checkip\Model\Config\Source\ActionMode</source_model>
+                </field>
+                <field id="delay_seconds" translate="label" type="text" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Pause in seconds</label>
+                    <depends>
+                        <field id="action_mode">2</field>
+                    </depends>
+                </field>
+                <field id="log_retention_days" translate="label comment" type="text" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Log retention days</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <comment><![CDATA[Number of days to retain previous log files. Default value: 30.]]></comment>
+                    <frontend_class>validate-digits</frontend_class>
+                </field>
+                <field id="blacklist" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Additional Blacklist (User Agents)</label>
+                    <comment><![CDATA[The default User-Agents are coming from crawlerdetect.io package. Here you can define your own custom ones. One User-Agent per line.]]></comment>
+                </field>
+                <field id="whitelist" translate="label" type="textarea" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Whitelist (User Agents)</label>
+                    <comment><![CDATA[One User-Agent per line.]]></comment>
                 </field>
             </group>
         </section>

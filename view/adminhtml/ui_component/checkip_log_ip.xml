@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         name="checkip_log_listing"
+         name="checkip_log_ip"
          xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">checkip_log_listing.checkip_log_listing_data_source</item>
-            <item name="deps" xsi:type="string">checkip_log_listing.checkip_log_listing_data_source</item>
+            <item name="provider" xsi:type="string">checkip_log_ip.checkip_log_ip_data_source</item>
+            <item name="deps" xsi:type="string">checkip_log_ip.checkip_log_ip_data_source</item>
         </item>
-        <item name="spinner" xsi:type="string">log_columns</item>
+        <item name="spinner" xsi:type="string">log_ip_columns</item>
     </argument>
 
-    <dataSource name="checkip_log_listing_data_source">
+    <dataSource name="checkip_log_ip_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Orangecat\Checkip\Model\Log\DataProvider</argument>
-            <argument name="name" xsi:type="string">checkip_log_listing_data_source</argument>
+            <argument name="class" xsi:type="string">Orangecat\Checkip\Model\Log\DataIpProvider</argument>
+            <argument name="name" xsi:type="string">checkip_log_ip_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
@@ -44,7 +44,7 @@
         <paging name="listing_paging"/>
     </listingToolbar>
 
-    <columns name="log_columns">
+    <columns name="log_ip_columns">
         <column name="id">
             <settings>
                 <label translate="true">ID</label>
@@ -76,10 +76,10 @@
         <column name="logfile">
             <settings>
                 <filter>select</filter>
-                <options class="Orangecat\Checkip\Model\Config\Source\LogFiles"/>
+                <options class="Orangecat\Checkip\Model\Config\Source\LogIpFiles"/>
                 <dataType>select</dataType>
-                <label translate="true">File</label>
-                <visible>false</visible>
+                <label translate="true">Date</label>
+                <visible>true</visible>
             </settings>
         </column>
     </columns>

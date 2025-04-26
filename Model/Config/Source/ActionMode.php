@@ -15,7 +15,8 @@ class ActionMode implements ArrayInterface
     {
         return [
             ['value' => '1', 'label' => __("Block access")],
-            ['value' => '2', 'label' => __("Pause access (delay)")]
+            ['value' => '2', 'label' => __("Pause access (delay)")],
+            ['value' => '3', 'label' => __("Only log")]
         ];
     }
 }

@@ -10,9 +10,9 @@ use Magento\Framework\Data\Collection\EntityFactoryInterface;
 use Magento\Framework\DataObject;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Ui\DataProvider\AbstractDataProvider;
-use Orangecat\Checkip\Model\Service\LogService;
+use Orangecat\Checkip\Model\Service\LogIpService;
 
-class DataProvider extends AbstractDataProvider
+class DataIpProvider extends AbstractDataProvider
 {
     /** @var File */
     protected $fileDriver;
@@ -90,10 +90,15 @@ class DataProvider extends AbstractDataProvider
             return $this->loadedData;
         }
 
-        $this->logFile = BP . '/var/ipblacklist/log/' . LogService::LOG_FILENAME . '.log';
+        $moment = 'Today';
+        $this->logFile = BP . '/var/ipblacklist/log/' . LogIpService::LOG_IP_FILENAME . '.log';
         $filters = $this->request->getParam('filters');
         if (isset($filters['logfile'])) {
             $this->logFile = BP . '/var/ipblacklist/log/' . $filters['logfile'];
+            $moment = 'Past';
+            if (preg_match('/\d{4}-\d{2}-\d{2}/', $filters['logfile'], $date)) {
+                $moment = $date[0];
+            }
         }
 
         $items = [];
@@ -154,7 +159,7 @@ class DataProvider extends AbstractDataProvider
                     'time' => $time,
                     'ip' => trim($ip),
                     'user_agent' => $userAgent,
-                    'logfile' => '',
+                    'logfile' => $moment,
                 ];
             }
         }

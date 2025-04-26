@@ -4,9 +4,9 @@ namespace Orangecat\Checkip\Model;
 
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
-use Orangecat\Checkip\Model\Service\LogService;
+use Orangecat\Checkip\Model\Service\LogBotService;
 
-class Logger extends \Monolog\Logger
+class LoggerBot extends \Monolog\Logger
 {
     /**
      * Constructor
@@ -24,7 +24,7 @@ class Logger extends \Monolog\Logger
     private function initHandlers(): array
     {
         return [
-            (new StreamHandler(BP . '/var/ipblacklist/log/' . LogService::LOG_FILENAME . '.log'))
+            (new StreamHandler(BP . '/var/botblacklist/log/' . LogBotService::LOG_BOT_FILENAME . '.log'))
                 ->setFormatter(new LineFormatter("%datetime%|%message%\n", "Y-m-d|H:i:s"))
         ];
     }

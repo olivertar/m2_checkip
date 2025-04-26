@@ -5,11 +5,11 @@ namespace Orangecat\Checkip\Model\Service;
 use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Orangecat\Checkip\Model\Config;
-use Orangecat\Checkip\Model\Logger;
+use Orangecat\Checkip\Model\LoggerIp;
 
-class LogService
+class LogIpService
 {
-    public const LOG_FILENAME = 'ips_detected_in_blacklist';
+    public const LOG_IP_FILENAME = 'ips_detected_in_blacklist';
 
     /**
      * @var Logger
@@ -39,13 +39,13 @@ class LogService
     /**
      * Constructor
      *
-     * @param Logger $logger
+     * @param LoggerIp $logger
      * @param File $file
      * @param DateTime $dateTime
      * @param Config $config
      */
     public function __construct(
-        Logger   $logger,
+        LoggerIp   $logger,
         File     $file,
         DateTime $dateTime,
         Config   $config
@@ -70,7 +70,7 @@ class LogService
                 $this->file->createDirectory($directory);
             }
 
-            $logPath = $directory . self::LOG_FILENAME . '.log';
+            $logPath = $directory . self::LOG_IP_FILENAME . '.log';
 
             $this->rotateIfNeeded($logPath);
 
@@ -95,7 +95,7 @@ class LogService
         $today = $this->dateTime->gmtDate('Y-m-d');
 
         if ($lastModifiedDate !== $today) {
-            $archivedPath = BP . '/var/ipblacklist/log/' . self::LOG_FILENAME . '_' . $lastModifiedDate . '.log';
+            $archivedPath = BP . '/var/ipblacklist/log/' . self::LOG_IP_FILENAME . '_' . $lastModifiedDate . '.log';
 
             if (!$this->file->isExists($archivedPath)) {
                 $this->file->rename($logPath, $archivedPath);
@@ -117,7 +117,7 @@ class LogService
         $now = time();
 
         foreach ($files as $file) {
-            if (preg_match('/' . self::LOG_FILENAME . '_(\d{4}-\d{2}-\d{2})\.log$/', $file, $matches)) {
+            if (preg_match('/' . self::LOG_IP_FILENAME . '_(\d{4}-\d{2}-\d{2})\.log$/', $file, $matches)) {
                 $fileDate = strtotime($matches[1]);
                 $age = ($now - $fileDate) / (60 * 60 * 24);
 

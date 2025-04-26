@@ -1,15 +1,15 @@
 <?php
 
-namespace Orangecat\Checkip\Block\Adminhtml\Log;
+namespace Orangecat\Checkip\Model\Config\Source;
 
-use Magento\Backend\Block\Template;
-use Magento\Backend\Block\Template\Context;
+use Magento\Framework\Option\ArrayInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Filesystem\Glob;
-use Orangecat\Checkip\Model\Service\LogService;
+use Orangecat\Checkip\Model\Service\LogIpService;
 
-class Index extends Template
+
+class LogIpFiles implements ArrayInterface
 {
     /** @var Filesystem */
     protected $filesystem;
@@ -17,28 +17,23 @@ class Index extends Template
     /**
      * Constructor
      *
-     * @param Context $context
      * @param Filesystem $filesystem
-     * @param array $data
      */
     public function __construct(
-        Context    $context,
-        Filesystem $filesystem,
-        array      $data = []
+        Filesystem $filesystem
     ) {
         $this->filesystem = $filesystem;
-        parent::__construct($context, $data);
     }
 
     /**
-     * Get Available Log Files
+     * To Option Array
      *
      * @return array
      */
-    public function getAvailableLogFiles()
+    public function toOptionArray()
     {
         $logDir = $this->filesystem->getDirectoryRead(DirectoryList::VAR_DIR)->getAbsolutePath('ipblacklist/log');
-        $files = Glob::glob($logDir . '/' . LogService::LOG_FILENAME . '*.log');
+        $files = Glob::glob($logDir . '/' . LogIpService::LOG_IP_FILENAME . '*.log');
 
         $logFiles = [];
         foreach ($files as $file) {

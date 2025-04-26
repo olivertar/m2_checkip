@@ -1,12 +1,13 @@
 {
     "name": "orangecat/checkip",
-    "description": "Blacklist: check customer IP",
+    "description": "Prevent crawlers and IPs reported from creating a session",
     "require": {
-        "php": "^7.4||^8.0",
-        "ext-dom": "*"
+        "php": "^7.4 || ^8.1",
+        "magento/framework": "*",
+        "jaybizzle/crawler-detect": "^1.2"
     },
     "type": "magento2-module",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "license": "OSL-3.0",
     "autoload": {
         "files": [

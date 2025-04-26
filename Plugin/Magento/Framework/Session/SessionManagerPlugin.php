@@ -7,7 +7,9 @@ use Magento\Framework\Filesystem\Driver\File;
 use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
 use Magento\Framework\Session\SessionManager;
 use Orangecat\Checkip\Model\Config;
-use Orangecat\Checkip\Model\Service\LogService;
+use Orangecat\Checkip\Model\Service\LogIpService;
+use Orangecat\Checkip\Model\Service\LogBotService;
+use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class SessionManagerPlugin
 {
@@ -23,8 +25,14 @@ class SessionManagerPlugin
     /** @var File */
     private $file;
 
-    /** @var LogService */
-    private $logService;
+    /** @var LogIpService */
+    private $logIpService;
+
+    /** @var LogBotService */
+    private $logBotService;
+
+    /** @var CrawlerDetect */
+    private $crawlerDetect;
 
     /**
      * Constructor
@@ -33,20 +41,26 @@ class SessionManagerPlugin
      * @param HttpRequest $httpRequest
      * @param RemoteAddress $remoteAddress
      * @param File $file
-     * @param LogService $logService
+     * @param LogIpService $logIpService
+     * @param LogBotService $logBotService
+     * @param CrawlerDetect $crawlerDetect
      */
     public function __construct(
         Config        $config,
         HttpRequest   $httpRequest,
         RemoteAddress $remoteAddress,
         File          $file,
-        LogService    $logService
+        LogIpService  $logIpService,
+        LogBotService $logBotService,
+        CrawlerDetect $crawlerDetect
     ) {
         $this->config = $config;
         $this->httpRequest = $httpRequest;
         $this->remoteAddress = $remoteAddress;
         $this->file = $file;
-        $this->logService = $logService;
+        $this->logIpService = $logIpService;
+        $this->logBotService = $logBotService;
+        $this->crawlerDetect = $crawlerDetect;
     }
 
     /**
@@ -58,15 +72,48 @@ class SessionManagerPlugin
      */
     public function aroundStart(SessionManager $subject, callable $proceed)
     {
-        if (!$this->config->isEnabled()) {
-            return $proceed();
+        $ip = $this->remoteAddress->getRemoteAddress();
+        $user_agent = $this->httpRequest->getServer('HTTP_USER_AGENT', '');
+
+        if($this->checkBot($ip, $user_agent)){
+            return $subject;
+        }else{
+            if($this->checkIp($ip, $user_agent)){
+                return $subject;
+            }
+        }
+        return $proceed();
+
+    }
+
+    private function checkIp($ip, $user_agent)
+    {
+        if (!$this->config->isIpEnabled()) {
+            return false;
         }
 
-        $ip = $this->remoteAddress->getRemoteAddress();
+        if (in_array($ip, $this->config->getIpWhitelist())) {
+            $this->logIpService->log($ip . '|-|' . $user_agent . '|whitelist');
+            return false;
+        }
+
+        $mode = $this->config->getIpActionMode();
+
+        if (in_array($ip, $this->config->getIpBlacklist())) {
+            $this->logIpService->log($ip . '|-|' . $user_agent . '|blacklist');
+            if ($mode === 1) {
+                return true;
+            } elseif ($mode === 2) {
+                sleep($this->config->getIpDelaySeconds());
+            }
+
+            return false;
+        }
+
         $blacklistPath = BP . Config::FILE_IPS_BLACKLIST;
 
         if (!$this->file->isExists($blacklistPath)) {
-            return $proceed();
+            return false;
         }
 
         $content = $this->file->fileGetContents($blacklistPath);
@@ -81,22 +128,54 @@ class SessionManagerPlugin
                 continue;
             }
             if ($this->ipInRange($ip, $cidr)) {
-                $userAgent = $this->httpRequest->getServer('HTTP_USER_AGENT', '');
-                $this->logService->log($ip . '|' . $cidr . '|' . $userAgent);
-
-                $mode = $this->config->getActionMode();
-
+                $this->logIpService->log($ip . '|' . $cidr . '|' . $user_agent . '|default');
                 if ($mode === 1) {
-                    return $subject;
+                    return true;
                 } elseif ($mode === 2) {
-                    sleep($this->config->getDelaySeconds());
+                    sleep($this->config->getIpDelaySeconds());
                 }
 
-                break;
+                return false;
             }
         }
 
-        return $proceed();
+        return false;
+    }
+
+    private function checkBot($ip, $user_agent)
+    {
+        if (!$this->config->isBotEnabled()) {
+            return false;
+        }
+
+        if (in_array($user_agent, $this->config->getBotWhitelist())) {
+            $this->logBotService->log($ip . '|' . $user_agent. '|whitelist');
+            return false;
+        }
+
+        $mode = $this->config->getBotActionMode();
+
+        if (in_array($user_agent, $this->config->getBotBlacklist())) {
+            $this->logBotService->log($ip . '|' . $user_agent. '|blacklist');
+            if ($mode === 1) {
+                return true;
+            } elseif ($mode === 2) {
+                sleep($this->config->getBotDelaySeconds());
+            }
+
+            return false;
+        }
+
+        if($this->crawlerDetect->isCrawler($user_agent)){
+            $this->logBotService->log($ip . '|' . $user_agent. '|crawlerlist');
+            if ($mode === 1) {
+                return true;
+            } elseif ($mode === 2) {
+                sleep($this->config->getBotDelaySeconds());
+            }
+        }
+
+        return false;
     }
 
     /**

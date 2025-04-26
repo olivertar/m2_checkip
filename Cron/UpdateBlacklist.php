@@ -3,8 +3,6 @@
 namespace Orangecat\Checkip\Cron;
 
 use Exception;
-use Magento\Cron\Model\Cron\Task\Scheduler;
-use Magento\Cron\Model\ScheduleFactory;
 use Magento\Framework\Filesystem\Driver\File;
 use Orangecat\Checkip\Model\Config;
 use Psr\Log\LoggerInterface;
@@ -20,27 +18,21 @@ class UpdateBlacklist
     /** @var Config */
     protected $config;
 
-    /** @var ScheduleFactory */
-    protected $scheduleFactory;
-
     /**
      * Constructor
      *
      * @param LoggerInterface $logger
      * @param File $file
      * @param Config $config
-     * @param ScheduleFactory $scheduleFactory
      */
     public function __construct(
         LoggerInterface $logger,
         File            $file,
-        Config          $config,
-        ScheduleFactory $scheduleFactory
+        Config          $config
     ) {
         $this->logger = $logger;
         $this->file = $file;
         $this->config = $config;
-        $this->scheduleFactory = $scheduleFactory;
     }
 
     /**
@@ -48,8 +40,6 @@ class UpdateBlacklist
      */
     public function execute()
     {
-        $this->updateCronJob();
-
         try {
             $url = $this->config->getUrlDownloadIpBlacklist();
             $content = file_get_contents($url);
@@ -68,34 +58,5 @@ class UpdateBlacklist
         } catch (Exception $e) {
             $this->logger->error(__("Orangecat_Checkip: Exception when updating the blacklist - ") . $e->getMessage());
         }
-    }
-
-    /**
-     * Update Cron Job
-     */
-    protected function updateCronJob()
-    {
-        $updateInterval = $this->config->getUpdateInterval();
-
-        if ($updateInterval > 0) {
-            $schedule = $this->scheduleFactory->create();
-            $schedule->setJobCode('checkip_update_blacklist');
-            $schedule->setScheduledAt($this->getNextScheduledTime($updateInterval));
-            $schedule->save();
-            $this->logger->info(__("Orangecat_Checkip: Cron job updated to run every %s hours.", $updateInterval));
-        }
-    }
-
-    /**
-     * Get Next Scheduled Time
-     *
-     * @param int $updateInterval
-     * @return string
-     */
-    protected function getNextScheduledTime($updateInterval)
-    {
-        $currentTime = time();
-        $nextExecutionTime = strtotime("+$updateInterval hours", $currentTime);
-        return date('Y-m-d H:i:s', $nextExecutionTime);
     }
 }
