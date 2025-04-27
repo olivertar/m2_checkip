@@ -41,6 +41,18 @@ class Config
 
     public const XML_PATH_BOT_WHITELIST = 'orangecat_checkip/bot/whitelist';
 
+    public const XML_PATH_API_ENABLED_IP = 'orangecat_checkip/api/enabledip';
+
+    public const XML_PATH_API_ENABLED_BOT = 'orangecat_checkip/api/enabledbot';
+
+    public const XML_PATH_API_CLEAR_FPC = 'orangecat_checkip/api/cache_fpc';
+
+    public const XML_PATH_API_WHITELIST = 'orangecat_checkip/api/whitelist';
+
+    public const XML_PATH_API_ONLY_NOTIFICATION = 'orangecat_checkip/api/notification';
+
+    public const XML_PATH_API_EMAIL = 'orangecat_checkip/api/emails_notification';
+
     /** @var ScopeConfigInterface */
     protected $scopeConfig;
 
@@ -231,5 +243,69 @@ class Config
         }
 
         return $list;
+    }
+
+    /**
+     * Is API IP Enabled
+     *
+     * @return bool
+     */
+    public function isApiIpEnabled(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_API_ENABLED_IP, ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * Is API Bot Enabled
+     *
+     * @return bool
+     */
+    public function isApiBotEnabled(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_API_ENABLED_BOT, ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * Only Notification
+     *
+     * @return bool
+     */
+    public function onlyNotification(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_API_ONLY_NOTIFICATION, ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * Clear Fpc Cache
+     *
+     * @return bool
+     */
+    public function clearFpcCache(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_API_CLEAR_FPC, ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * Get Api Whitelist
+     *
+     * @return array
+     */
+    public function getApiWhitelist(): array
+    {
+        return $this->getList(self::XML_PATH_API_WHITELIST);
+    }
+
+    /**
+     * Get Api Emails
+     *
+     * @return array
+     */
+    public function getApiEmails(): array
+    {
+        $emails = (string)$this->scopeConfig->getValue(self::XML_PATH_API_EMAIL, ScopeInterface::SCOPE_STORE);
+        if ($emails) {
+            return array_map('trim', explode(',', $emails));
+        }
+        return [];
     }
 }

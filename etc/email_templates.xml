@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/email_templates.xsd">
+    <template id="checkip_status_change_email" label="Orangecat Checkip Status Change" file="checkip_status_change.html"
+              type="html" area="frontend" module="Orangecat_Checkip"/>
+</config>

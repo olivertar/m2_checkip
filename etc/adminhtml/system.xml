@@ -93,6 +93,41 @@
                     <comment><![CDATA[One User-Agent per line.]]></comment>
                 </field>
             </group>
+
+            <group id="api" translate="label" sortOrder="430" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>API Settings</label>
+                <field id="instructtions" translate="label" type="note" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Orangecat\Checkip\Block\Adminhtml\System\ApiInstructions</frontend_model>
+                </field>
+                <field id="notification" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Only Email Notification?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="emails_notification" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Emails Notification</label>
+                    <comment><![CDATA[Enter comma-separated email addresses (e.g. admin@example.com, support@example.com). Leave empty to not send notifications]]></comment>
+                </field>
+                <field id="enabledip" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable API IP</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enabledbot" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Enable API BOT</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cache_fpc" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Clear Full Page Cache after status change</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="whitelist" translate="label" type="textarea" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Whitelist</label>
+                    <comment><![CDATA[This endpoint is public. You must enter the IP from which you will make the request so that only you can access it.]]></comment>
+                </field>
+            </group>
         </section>
     </system>
 </config>

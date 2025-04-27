@@ -15,6 +15,12 @@ The list of matches is saved in TXT format in a daily log that is deleted every 
 
 Additionally, you can also check for crawler visits. For this, we use the "Crawler-Detect" package (https://github.com/JayBizzle/Crawler-Detect/) as a dependency.
 
+You also have the option to enable/disable IP or bot protection via API and receive email notifications when the API is accessed.
+This is especially usefu:
+- GET /V1/checkip/enableip?enabled=true:false
+- GET /V1/checkip/enablebot?enabled=true:false
+- GET /V1/checkip/enableall?enabled=true:false
+
 ## Installation
 
 The extension must be installed via `composer`. To proceed, run these commands in your terminal:
@@ -53,4 +59,14 @@ var/ipblacklist
 
 ## Log Bot folder
 var/botblacklist
+
+## Configuration API
+Stores > Configuration > Security > Check IP
+- Only Email Notification?
+- Emails Notification
+- Enable API IP
+- Enable API BOT
+- Clear Full Page Cache after status change
+- Whitelist
+
 
