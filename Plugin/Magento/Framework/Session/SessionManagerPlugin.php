@@ -187,6 +187,11 @@ class SessionManagerPlugin
      */
     private function ipInRange($ip, $cidr)
     {
+        // Keep working with single ip without range
+        if (strpos($cidr, '/') === false) {
+            $cidr .= '/32';
+        }
+
         list($subnet, $mask) = explode('/', $cidr);
         return (ip2long($ip) & ~((1 << (32 - $mask)) - 1)) == ip2long($subnet);
     }
