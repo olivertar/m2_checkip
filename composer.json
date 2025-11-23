@@ -4,7 +4,8 @@
     "require": {
         "php": "^7.4 || ^8.1",
         "magento/framework": "*",
-        "jaybizzle/crawler-detect": "^1.2"
+        "jaybizzle/crawler-detect": "^1.2",
+        "orangecat/core": "^1.0.1"
     },
     "type": "magento2-module",
     "license": "OSL-3.0",
