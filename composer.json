@@ -1,6 +1,6 @@
 {
     "name": "orangecat/checkip",
-    "description": "Prevent crawlers and IPs reported from creating a session",
+    "description": "Prevent Bots and IPs reported from creating a session",
     "require": {
         "php": "^7.4 || ^8.1",
         "magento/framework": "*",

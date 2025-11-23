@@ -1,4 +1,10 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Orangecat. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/menu.xsd">
     <menu>
@@ -6,5 +12,36 @@
              action="checkip/log/ip" parent="Magento_Backend::system" resource="Magento_Backend::admin"/>
         <add id="Orangecat_Checkip::logbot" title="Bot Blacklist Log" module="Orangecat_Checkip" sortOrder="110"
              action="checkip/log/bot" parent="Magento_Backend::system" resource="Magento_Backend::admin"/>
+
+        <add id="Orangecat_Checkip::checkip"
+             title="Check IP / Bots"
+             module="Orangecat_Checkip"
+             sortOrder="760"
+             resource="Orangecat_Checkip::checkip"
+             parent="Orangecat_Core::menu"/>
+             
+        <add id="Orangecat_Checkip::menu_logip"
+             title="Log IPs"
+             module="Orangecat_Checkip"
+             sortOrder="10"
+             action="checkip/log/ip"
+             resource="Magento_Backend::admin"
+             parent="Orangecat_Checkip::checkip"/>
+             
+        <add id="Orangecat_Checkip::menu_logbot"
+             title="Log Bots"
+             module="Orangecat_Checkip"
+             sortOrder="20"
+             action="checkip/log/bot"
+             resource="Magento_Backend::admin"
+             parent="Orangecat_Checkip::checkip"/>
+
+        <add id="Orangecat_Checkip::config_core"
+             title="Configuration"
+             module="Orangecat_Checkip"
+             sortOrder="1000"
+             action="adminhtml/system_config/edit/section/orangecat_checkip"
+             resource="Orangecat_Checkip::config"
+             parent="Orangecat_Checkip::checkip"/>
     </menu>
 </config>

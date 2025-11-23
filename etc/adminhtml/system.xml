@@ -1,11 +1,17 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Orangecat. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="orangecat_checkip" translate="label" sortOrder="900" showInDefault="1" showInWebsite="1"
                  showInStore="1">
             <label><![CDATA[Check IPs & BOTs]]></label>
-            <tab>security</tab>
+            <tab>orangecat</tab>
             <resource>Orangecat_Checkip::config</resource>
             <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <field id="crawler_detect_version" translate="label" type="note" sortOrder="90" showInDefault="1" showInWebsite="0" showInStore="0">

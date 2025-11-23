@@ -1,4 +1,10 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Orangecat. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+-->
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Webapi/etc/webapi.xsd">
     <route url="/V1/checkip/enableip" method="GET">
         <service class="Orangecat\Checkip\Api\ConfigManagementInterface" method="setIpEnabled"/>

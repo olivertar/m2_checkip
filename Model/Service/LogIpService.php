@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright © Orangecat. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
 
 namespace Orangecat\Checkip\Model\Service;
 
@@ -111,7 +115,7 @@ class LogIpService
     private function cleanupOldLogs()
     {
         $logDir = BP . '/var/ipblacklist/log';
-        $retentionDays = $this->config->getLogRetentionDays();
+        $retentionDays = $this->config->getIpLogRetentionDays();
         $files = $this->file->readDirectory($logDir);
 
         $now = time();

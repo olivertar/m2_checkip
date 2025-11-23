@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright © Orangecat. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
 namespace Orangecat\Checkip\Model;
 
 use Magento\Framework\App\Config\Storage\WriterInterface;
